@@ -1,39 +1,31 @@
-from urllib.parse import urlparse
+from urllib.parse import urljoin
 from bs4 import BeautifulSoup,SoupStrainer
 import requests
 import time
 
-#BASE_URL = "http://genius.com"
-#artist_url = "http://genius.com/artists/Pink-floyd"
+BASE_URL = "http://www.azlyrics.com"
+artist_url = "http://www.azlyrics.com/p/pinkfloyd.html"
 #from selenium import webdriver
 #from selenium.webdriver.common.keys import Keys
 #browser = webdriver.Firefox()
 #browser.get(artist_url)
 #elem=browser.find_element_by_tag_name("body")
-
+#htmlfile=browser.page_source
+#soupAllSongs=BeautifulSoup(htmlfile,"lxml")
+#print(soupAllLinksParse)
 #pagedown=300
 #while pagedown:
  #   elem.send_keys(Keys.DOWN)
   #  time.sleep(0.1)
    # pagedown=pagedown-1
     #print (pagedown)
-
 #post_elems=browser.find_element_by_class_name("song_title")
-
 #I used Selenium to scroll till bottom (had infinite scroll)
 # and saved the result in a html file Commented part in the code is of scraping.
-
-#BASE_URL = "http://genius.com"
-
-#artist_url = "http://genius.com/artists/Pink-floyd"
-
-
+'''
 html=open('pfsongslist.html').read()
-
 songsList = SoupStrainer('section',{'class': 'all_songs'})
-
 souplyrics=SoupStrainer('div',{'class':'lyrics'})
-
 songsLink=[]
 songLyrics=[]
 #songdetails={}
@@ -42,7 +34,6 @@ listOfSongs = BeautifulSoup(html,parse_only=songsList)
 for a in listOfSongs.findAll('a',{'class':'song_link' }):
     songsLink.append(a['href'])
     #print (a['title'])
-
 for i in songsLink:
     response=requests.get(i)
     lyrics=BeautifulSoup(response.text,parse_only=souplyrics)
@@ -50,7 +41,56 @@ for i in songsLink:
         songLyrics.append(p.text)
     count=count+1
     print("At Song %d . Remaining : %d "%(count,len(songsLink)-count))
+    time.sleep(5)
+'''
+
+'''Above method was using Genius.com for scraping but the requests were taking a lot of time
+and I got connection timeout after several requests, so it wasn't practically possible to use
+it. So I shifted over to a lightweight more cleaner lyrics source, azlyrics.com
+Also, I tried using Musixmatch API but felt that scraping is more suitable for this project.
+Though that service is nice and I will consider it in my future projects'''
 
 
-print (songsLyrics)
+htmlfile=open('pfaz.html').read()
+soupAllLinks=SoupStrainer('a',{'target': '_blank'})
+
+soupAllLinksParse=BeautifulSoup(htmlfile,parse_only=soupAllLinks)
+
+songLinks=[]
+songLyrics=[]
+count=0
+
+for i in soupAllLinksParse.findAll('a'):
+    if i['href'][:2] !='..':
+        pass
+    else:
+        #print(i['href'])
+
+        link=urljoin(BASE_URL,i['href'][2:])
+
+        songLinks.append(link)
+
+print (songLinks[48])
+data = open("lyricsAll.txt", "a")
+
+'''
+for i in songLinks:
+    response=requests.get(i)
+    #print (response.text)
+    lyrics=BeautifulSoup(response.text)
+    cleaned=lyrics.findAll('div')[22].text.replace("\n"," ").replace("\r"," ").strip()
+    #songLyrics.append(cleaned)
+    They have no class or id for lyrics. Smartasses, so had to hardcode [22]
+    Cleaning of Data. Removed \n \r tags and stripped excess whitespace.
+
+    data.write(cleaned)
+    count=count+1
+    print("At Song %d . Remaining : %d "%(count,len(songLinks)-count))
+
+    time.sleep(1)         #To Not hit the servers hard
+
+data.close()
+'''
+#print (len(songLyrics))
+
 
