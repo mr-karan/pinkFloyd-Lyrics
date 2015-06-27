@@ -50,7 +50,6 @@ it. So I shifted over to a lightweight more cleaner lyrics source, azlyrics.com
 Also, I tried using Musixmatch API but felt that scraping is more suitable for this project.
 Though that service is nice and I will consider it in my future projects'''
 
-
 htmlfile=open('pfaz.html').read()
 soupAllLinks=SoupStrainer('a',{'target': '_blank'})
 
@@ -61,36 +60,35 @@ songLyrics=[]
 count=0
 
 for i in soupAllLinksParse.findAll('a'):
+
     if i['href'][:2] !='..':
         pass
     else:
         #print(i['href'])
-
         link=urljoin(BASE_URL,i['href'][2:])
-
         songLinks.append(link)
 
-print (songLinks[48])
-data = open("lyricsAll.txt", "a")
+#print(songLinks[142:])
 
-'''
-for i in songLinks:
-    response=requests.get(i)
-    #print (response.text)
-    lyrics=BeautifulSoup(response.text)
-    cleaned=lyrics.findAll('div')[22].text.replace("\n"," ").replace("\r"," ").strip()
-    #songLyrics.append(cleaned)
-    They have no class or id for lyrics. Smartasses, so had to hardcode [22]
-    Cleaning of Data. Removed \n \r tags and stripped excess whitespace.
+data = open("lyricsLast.txt", "a")
 
-    data.write(cleaned)
-    count=count+1
-    print("At Song %d . Remaining : %d "%(count,len(songLinks)-count))
 
-    time.sleep(1)         #To Not hit the servers hard
+for i in songLinks[143:]:
+    print(i)
+    try:
+        response=requests.get(i, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36'})
+        print ("Status Code : %d "%(response.status_code))
+        lyrics=BeautifulSoup(response.text)
+        cleaned=lyrics.findAll('div')[22].text.replace("\n"," ").replace("\r"," ").strip()
+        data.write(cleaned)
+        count=count+1
+        print("At Song %d . Remaining : %d "%(count,len(songLinks)-count))
+        time.sleep(15)
+    except requests.exceptions.ConnectionError:
+        print("Bad Req")
+
 
 data.close()
-'''
-#print (len(songLyrics))
-
+print(songLyrics)
+print (len(songLyrics))
 
