@@ -7,3 +7,5 @@ To Do :
 <br/>
 - [ ] Use NLTK to analyze patterns
 - [ ] Use a Visualizing library to plot the results.
+- [ ] Manage Exceptions for wrong url / Status code !=200
+
