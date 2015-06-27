@@ -1,7 +1,7 @@
 # pinkFloyd-Lyrics
 Analyzing Pink Floyd lyrics
 
-Grabbed the lyrics from http://genius.com/artists/Pink-floyd.
+Grabbed the lyrics from http://www.azlyrics.com/p/pinkfloyd.html
 
 To Do : 
 <br/>
