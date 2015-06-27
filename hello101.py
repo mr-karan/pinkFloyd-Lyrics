@@ -73,7 +73,7 @@ for i in soupAllLinksParse.findAll('a'):
 data = open("lyricsLast.txt", "a")
 
 
-for i in songLinks[143:]:
+for i in songLinks:
     print(i)
     try:
         response=requests.get(i, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36'})
