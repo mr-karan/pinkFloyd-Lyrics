@@ -5,24 +5,25 @@ import time
 
 BASE_URL = "http://www.azlyrics.com"
 artist_url = "http://www.azlyrics.com/p/pinkfloyd.html"
-#from selenium import webdriver
-#from selenium.webdriver.common.keys import Keys
-#browser = webdriver.Firefox()
-#browser.get(artist_url)
-#elem=browser.find_element_by_tag_name("body")
-#htmlfile=browser.page_source
-#soupAllSongs=BeautifulSoup(htmlfile,"lxml")
-#print(soupAllLinksParse)
-#pagedown=300
-#while pagedown:
- #   elem.send_keys(Keys.DOWN)
-  #  time.sleep(0.1)
-   # pagedown=pagedown-1
-    #print (pagedown)
-#post_elems=browser.find_element_by_class_name("song_title")
-#I used Selenium to scroll till bottom (had infinite scroll)
-# and saved the result in a html file Commented part in the code is of scraping.
 '''
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+browser = webdriver.Firefox()
+browser.get(artist_url)
+elem=browser.find_element_by_tag_name("body")
+htmlfile=browser.page_source
+soupAllSongs=BeautifulSoup(htmlfile,"lxml")
+print(soupAllLinksParse)
+pagedown=300
+while pagedown:
+    elem.send_keys(Keys.DOWN)
+    time.sleep(0.1)
+    pagedown=pagedown-1
+    print (pagedown)
+post_elems=browser.find_element_by_class_name("song_title")
+I used Selenium to scroll till bottom (had infinite scroll)
+ and saved the result in a html file Commented part in the code is of scraping.
+
 html=open('pfsongslist.html').read()
 songsList = SoupStrainer('section',{'class': 'all_songs'})
 souplyrics=SoupStrainer('div',{'class':'lyrics'})
@@ -49,6 +50,8 @@ and I got connection timeout after several requests, so it wasn't practically po
 it. So I shifted over to a lightweight more cleaner lyrics source, azlyrics.com
 Also, I tried using Musixmatch API but felt that scraping is more suitable for this project.
 Though that service is nice and I will consider it in my future projects'''
+
+
 
 htmlfile=open('pfaz.html').read()
 soupAllLinks=SoupStrainer('a',{'target': '_blank'})
@@ -89,6 +92,5 @@ for i in songLinks:
 
 
 data.close()
-print(songLyrics)
-print (len(songLyrics))
+
 
