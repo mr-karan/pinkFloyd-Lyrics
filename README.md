@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/mr-karan/pinkFloyd-Lyrics.png?label=ready&title=Ready)](https://waffle.io/mr-karan/pinkFloyd-Lyrics)
 # pinkFloyd-Lyrics
 Analyzing Pink Floyd lyrics
 
