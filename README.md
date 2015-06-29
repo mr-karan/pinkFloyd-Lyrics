@@ -18,4 +18,4 @@ Result :
 NOTE : 
 I also ran the script scraping Simon and Garfunkel lyrics. Here's the result : 
 
-![Top 25 Words in Simon & Garfunkel Songs](http://i.imgur.com/Jbi70Lb.png)
+![Top 25 Words in Simon & Garfunkel Songs](http://i.imgur.com/i4RmMpB.png)
